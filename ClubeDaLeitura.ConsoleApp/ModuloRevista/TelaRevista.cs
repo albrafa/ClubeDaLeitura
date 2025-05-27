@@ -59,7 +59,7 @@ namespace ClubeDaLeitura.ConsoleApp.ModuloRevista
             Caixa caixaPertencente = repositorioCaixa.SelecionarCaixaPorId(idCaixa);
 
             Revista novaRevista = new Revista(tituloRevista, numeroRevista, anoPublicacao, caixaPertencente);
-            novaRevista.IdRevista = GeradorIds.GerarIdRevista();
+            novaRevista.Id = GeradorIds.GerarIdRevista();
 
             repositorioRevista.CadastrarRevista(novaRevista);
 
@@ -74,7 +74,7 @@ namespace ClubeDaLeitura.ConsoleApp.ModuloRevista
             Console.WriteLine("----------------------");
             Console.WriteLine();
 
-            VisualizarRevista(false);
+            VisualizarRevistas(false);
 
             Console.Write("Digite o ID da revista que deseja editar: ");
             int idSelecionado = Convert.ToInt32(Console.ReadLine());
@@ -116,7 +116,7 @@ namespace ClubeDaLeitura.ConsoleApp.ModuloRevista
             Console.WriteLine("----------------------");
             Console.WriteLine();
 
-            VisualizarRevista(false);
+            VisualizarRevistas(false);
 
             Console.Write("Digite o ID da revista que deseja excluir: ");
             int idSelecionado = Convert.ToInt32(Console.ReadLine());
@@ -131,7 +131,7 @@ namespace ClubeDaLeitura.ConsoleApp.ModuloRevista
             Notificador.ExibirMensagem("A revista foi devidamente excluída do sistema.", ConsoleColor.Green);
         }
 
-        public void VisualizarRevista(bool exibirTitulo)
+        public void VisualizarRevistas(bool exibirTitulo)
         {
             if (exibirTitulo)
             {
@@ -153,7 +153,7 @@ namespace ClubeDaLeitura.ConsoleApp.ModuloRevista
                 if (r == null) continue;
 
                 Console.WriteLine("{0, -8} | {1, -15} | {2, -8} | {3, -8} | {4, -8}",
-                    r.IdRevista, r.TituloRevista, r.NumeroRevista, r.AnoPublicacao, r.CaixaPertencente.EtiquetaCaixa);
+                    r.Id, r.Titulo, r.Numero, r.AnoPublicacao, r.CaixaPertencente.EtiquetaCaixa);
 
             }
         }

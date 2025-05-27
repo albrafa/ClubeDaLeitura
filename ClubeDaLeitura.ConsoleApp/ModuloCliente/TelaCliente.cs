@@ -57,7 +57,7 @@ namespace ClubeDaLeitura.ConsoleApp.ModuloCliente
             Console.WriteLine("----------------------");
             Console.WriteLine();
 
-            VisualizarCliente(false);
+            VisualizarClientes(false);
 
             Console.Write("Digite o ID de registro do cliente que deseja editar: ");
             int idSelecionado = Convert.ToInt32(Console.ReadLine());
@@ -94,7 +94,7 @@ namespace ClubeDaLeitura.ConsoleApp.ModuloCliente
             Console.WriteLine("----------------------");
             Console.WriteLine();
 
-            VisualizarCliente(false);
+            VisualizarClientes(false);
 
             Console.Write("Digite o ID do cliente que deseja excluir: ");
             int idSelecionado = Convert.ToInt32(Console.ReadLine());
@@ -110,7 +110,7 @@ namespace ClubeDaLeitura.ConsoleApp.ModuloCliente
             Notificador.ExibirMensagem("O cliente foi devidamente excluído do sistema.", ConsoleColor.Green);
         }
 
-        public void VisualizarCliente(bool exibirTitulo)
+        public void VisualizarClientes(bool exibirTitulo)
         {
             if (exibirTitulo)
             {
@@ -122,7 +122,7 @@ namespace ClubeDaLeitura.ConsoleApp.ModuloCliente
             }
             Console.WriteLine();
 
-            Console.WriteLine("{0, - 8} | {1, -12} | {2, -12} | {3, -10}",
+            Console.WriteLine("{0, -8} | {1, -12} | {2, -12} | {3, -10}",
                                "ID", "Nome", "Responsável", "Contato");
 
             Cliente[] clientes = repositorioCliente.SelecionarClientes();
@@ -134,8 +134,8 @@ namespace ClubeDaLeitura.ConsoleApp.ModuloCliente
                 if (clienteSelecionado == null) continue;
 
 
-                Console.WriteLine("{0, - 8} | {1, -12} | {2, -12} | {3, -10}",
-                clienteSelecionado.Id, clienteSelecionado.NomeCliente, clienteSelecionado.NomeResponsavel, clienteSelecionado.Telefone);
+                Console.WriteLine("{0, -8} | {1, -12} | {2, -12} | {3, -10}",
+                clienteSelecionado.Id, clienteSelecionado.Nome, clienteSelecionado.NomeResponsavel, clienteSelecionado.Telefone);
             }
         }
 

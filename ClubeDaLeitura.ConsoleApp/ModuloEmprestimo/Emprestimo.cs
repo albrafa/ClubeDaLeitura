@@ -1,29 +1,39 @@
 ﻿using ClubeDaLeitura.ConsoleApp.ModuloCliente;
 using ClubeDaLeitura.ConsoleApp.ModuloRevista;
 
-namespace ClubeDaLeitura.ConsoleApp.ModuloEmprestimo
+namespace ClubeDaLeitura.ConsoleApp.ModuloEmprestimo;
+
+public class Emprestimo
 {
-  public  class Emprestimo
+    public int Id;
+    public Cliente Cliente { get; set; }
+    public Revista Revista { get; set; }
+    public DateTime DataEmprestimo { get; private set; }
+    public DateTime DataDevolucao { get; private set; }
+
+
+    public Emprestimo(Cliente cliente, Revista revista, DateTime dataEmprestimo)
     {
-        public int Id;
-        public Cliente Cliente { get; set; }
-        public Revista Revista { get; set; }
-        public DateTime DataEmprestimo { get; private set; }
-        public DateTime DataDevolucao { get; private set; }
+        Cliente = cliente;
+        Revista = revista;
+        DataEmprestimo = DateTime.Today;
+    }
 
+    public int TempoCorridoEmprestimo()
+    {
+        TimeSpan tempoTotalEmprestimo = DateTime.Now.Subtract(DataEmprestimo);
 
-        public Emprestimo(Cliente cliente, Revista revista, DateTime dataEmprestimo)
-        {            
-            Cliente = cliente;
-            Revista = revista;
-            DataEmprestimo = DateTime.Today;            
-        }
+        return tempoTotalEmprestimo.Days;
+    }
 
-        public int TempoCorridoEmprestimo()
+    public bool RegistrarDevolucao(DateTime data)
+    {
+        if (data > DataEmprestimo)
         {
-            TimeSpan tempoTotalEmprestimo = DateTime.Now.Subtract(DataEmprestimo);
-
-            return tempoTotalEmprestimo.Days;
+            DataDevolucao = data;
+            return true;
         }
+
+        return false;
     }
 }

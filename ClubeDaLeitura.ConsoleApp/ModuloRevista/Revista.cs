@@ -7,9 +7,9 @@ namespace ClubeDaLeitura.ConsoleApp.ModuloRevista
     {
         public static int RevistaSelecionada = 0;
 
-        public int IdRevista { get; set; }
-        public string TituloRevista { get; set; }
-        public int NumeroRevista { get; set; }
+        public int Id { get; set; }
+        public string Titulo { get; set; }
+        public int Numero { get; set; }
         public int AnoPublicacao { get; set; }
         public Caixa CaixaPertencente { get; set; }
 
@@ -19,17 +19,17 @@ namespace ClubeDaLeitura.ConsoleApp.ModuloRevista
         {
             get
             {
-                string tresPrimeirosCaracteres = TituloRevista.Substring(0, 3).ToUpper();
+                string tresPrimeirosCaracteres = Titulo.Substring(0, 3).ToUpper();
 
-                return $"{tresPrimeirosCaracteres}-{IdRevista}";
+                return $"{tresPrimeirosCaracteres}-{Id}";
             }
         }
 
 
         public Revista(string tituloRevista, int numeroRevista, int anoPublicacao, Caixa caixaPertencente)
         {
-            TituloRevista = tituloRevista;
-            NumeroRevista = numeroRevista;
+            Titulo = tituloRevista;
+            Numero = numeroRevista;
             AnoPublicacao = anoPublicacao;
             CaixaPertencente = caixaPertencente;
         }
@@ -46,13 +46,13 @@ namespace ClubeDaLeitura.ConsoleApp.ModuloRevista
         {
             string erros = null;
 
-            if (string.IsNullOrEmpty(TituloRevista))
+            if (string.IsNullOrEmpty(Titulo))
                 erros += "O campo 'Título' é obrigatório.";
 
-            if (TituloRevista.Length < 2)
+            if (Titulo.Length < 2)
                 erros += "Por favor, insira ao menos 2 caracteres.\n";
 
-            if (NumeroRevista == null)
+            if (Numero == null)
                 erros += "O campo 'Número da Edição' é obrigatório.\n";
 
             if (AnoPublicacao == null)

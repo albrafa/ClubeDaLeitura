@@ -5,14 +5,14 @@ namespace ClubeDaLeitura.ConsoleApp.ModuloCliente
     public class Cliente
     {
         public int Id { get; set; }
-        public string NomeCliente { get; set; }
+        public string Nome { get; set; }
         public string NomeResponsavel { get; set; }
         public int Telefone { get; set; }
 
 
         public Cliente(string nomeCliente, string nomeResponsavel, int telefone)
         {
-            NomeCliente = nomeCliente;
+            Nome = nomeCliente;
             NomeResponsavel = nomeResponsavel;
             Telefone = telefone;
         }
@@ -28,10 +28,10 @@ namespace ClubeDaLeitura.ConsoleApp.ModuloCliente
         {
            string erros = null;
 
-            if (string.IsNullOrEmpty(NomeCliente))
+            if (string.IsNullOrEmpty(Nome))
                 erros += "O campo 'Nome' é obrigatório.\n";
 
-            if (NomeCliente.Length < 3)
+            if (Nome.Length < 3)
                 erros += "Por favor, insira ao menos 3 caracteres.\n";
 
             if (string.IsNullOrEmpty(NomeResponsavel))

@@ -15,10 +15,10 @@ namespace ClubeDaLeitura.ConsoleApp.ModuloRevista
             {
                 if (revistas[i] == null) continue;
 
-                else if (revistas[i].IdRevista == idSelecionado)
+                else if (revistas[i].Id == idSelecionado)
                 {
-                    revistas[i].TituloRevista = novaRevista.TituloRevista;
-                    revistas[i].NumeroRevista = novaRevista.NumeroRevista;
+                    revistas[i].Titulo = novaRevista.Titulo;
+                    revistas[i].Numero = novaRevista.Numero;
                     revistas[i].AnoPublicacao = novaRevista.AnoPublicacao;
                     revistas[i].CaixaPertencente = novaRevista.CaixaPertencente;
 
@@ -32,7 +32,7 @@ namespace ClubeDaLeitura.ConsoleApp.ModuloRevista
 
         public void CadastrarRevista(Revista novaRevista)
         {
-            novaRevista.IdRevista = GeradorIds.GerarIdRevista();
+            novaRevista.Id = GeradorIds.GerarIdRevista();
 
             revistas[contadorRevista++] = novaRevista;
         }
@@ -51,7 +51,7 @@ namespace ClubeDaLeitura.ConsoleApp.ModuloRevista
                 if (revista == null)
                     continue;
 
-                else if (revista.IdRevista == idCaixaRevistaSelecionada)
+                else if (revista.Id == idCaixaRevistaSelecionada)
                     return revista;
             }
 
@@ -67,7 +67,7 @@ namespace ClubeDaLeitura.ConsoleApp.ModuloRevista
                 if (revistas[i] == null)
                     continue;
 
-                else if (revistas[i].IdRevista == idSelecionado)
+                else if (revistas[i].Id == idSelecionado)
                 {
                     revistas[i] = null;
 

@@ -11,15 +11,24 @@ namespace ClubeDaLeitura.ConsoleApp.ModuloCompartilhado
         static void Main(string[] args)
         {
             RepositorioCaixa repositorioCaixa = new RepositorioCaixa();
+            Caixa caixa = new Caixa("123-abc", "Vermelho", 7);
+            repositorioCaixa.CadastrarCaixa(caixa);
+
             RepositorioCliente repositorioCliente = new RepositorioCliente();
+            repositorioCliente.CadastrarCliente(new Cliente("Rafael","Carolina", 499997654));
+
             RepositorioRevista repositorioRevista = new RepositorioRevista();
+            repositorioRevista.CadastrarRevista(new Revista("Superman 2", 2, 2020, caixa));
+
             RepositorioEmprestimo repositorioEmprestimo = new RepositorioEmprestimo();
 
             TelaCliente telaCliente = new TelaCliente(repositorioCliente);
             TelaCaixa telaCaixa = new TelaCaixa(repositorioCaixa);
             TelaRevista telaRevista = new TelaRevista(repositorioRevista, repositorioCaixa);            
             TelaEmprestimo telaEmprestimo = new TelaEmprestimo(repositorioEmprestimo, repositorioCaixa, repositorioCliente, repositorioRevista);
-
+            
+            telaEmprestimo.telaCliente = telaCliente;
+            telaEmprestimo.telaRevista = telaRevista;
 
             TelaPrincipal telaPrincipal = new TelaPrincipal();
 
@@ -43,7 +52,7 @@ namespace ClubeDaLeitura.ConsoleApp.ModuloCompartilhado
                             case "3":                                
                                     telaCliente.ExcluirCliente(); break;
                             case "4":                                
-                                    telaCliente.VisualizarCliente(true); break;                                
+                                    telaCliente.VisualizarClientes(true); break;                                
                         }
                         break;
 
@@ -78,7 +87,7 @@ namespace ClubeDaLeitura.ConsoleApp.ModuloCompartilhado
                                 case "3":
                                     telaRevista.ExcluirRevista(); break;
                                 case "4":                                    
-                                    telaRevista.VisualizarRevista(true); break;                                                          
+                                    telaRevista.VisualizarRevistas(true); break;                                                          
                             }
                             break;
                         }
@@ -94,7 +103,7 @@ namespace ClubeDaLeitura.ConsoleApp.ModuloCompartilhado
                                 case "2":                                    
                                         telaEmprestimo.RegistrarDevolucao(); break;
                                 case "3":                                    
-                                        telaEmprestimo.VisualizarEmprestimo(); break;                                    
+                                        telaEmprestimo.VisualizarEmprestimos(); break;                                    
                             }
                             break;
                         }

@@ -24,7 +24,7 @@ namespace ClubeDaLeitura.ConsoleApp.ModuloCliente
 
                 else if (clientes[i].Id == idSelecionado)
                 {
-                    clientes[i].NomeCliente = clienteAtualizado.NomeCliente;
+                    clientes[i].Nome = clienteAtualizado.Nome;
                     clientes[i].NomeResponsavel = clienteAtualizado.NomeResponsavel;
                     clientes[i].Telefone = clienteAtualizado.Telefone;
 
