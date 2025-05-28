@@ -14,7 +14,7 @@ namespace ClubeDaLeitura.ConsoleApp.ModuloEmprestimo
 
         {
             novoEmprestimo.Id = GeradorIds.GerarIdEmprestimo();
-            
+
             emprestimos[contadorEmprestimos++] = novoEmprestimo;
         }
 
@@ -25,7 +25,20 @@ namespace ClubeDaLeitura.ConsoleApp.ModuloEmprestimo
 
         internal Emprestimo SelecionarEmprestimoPorId(int idSelecionado)
         {
-            for (int i = 0;
+            for (int i = 0; i < emprestimos.Length; i++)
+
+            {
+                Emprestimo emprestimo = emprestimos[i];
+
+                if (emprestimo == null)
+                    continue;
+
+                else if (emprestimo.Id == idSelecionado)
+                    return emprestimo;
+
+            }
+
+            return null;
         }
     }
 }

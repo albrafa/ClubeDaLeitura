@@ -25,5 +25,18 @@ namespace ClubeDaLeitura.ConsoleApp.ModuloEmprestimo
 
             return tempoTotalEmprestimo.Days;
         }
+
+        public bool RegistrarDevolucao(DateTime data)
+        {
+            if (data > DataEmprestimo)
+            {
+                DataDevolucao = data;
+
+                return true;
+            }
+
+            return false;
+        }
+
     }
 }
