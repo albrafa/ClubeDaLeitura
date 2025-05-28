@@ -22,5 +22,10 @@ namespace ClubeDaLeitura.ConsoleApp.ModuloEmprestimo
         {
             return emprestimos;
         }
+
+        internal Emprestimo SelecionarEmprestimoPorId(int idSelecionado)
+        {
+            for (int i = 0;
+        }
     }
 }

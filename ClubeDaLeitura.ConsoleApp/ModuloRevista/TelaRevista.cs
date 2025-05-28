@@ -6,9 +6,17 @@ namespace ClubeDaLeitura.ConsoleApp.ModuloRevista
 {
     public class TelaRevista
     {
-        public TelaCaixa TelaCaixa;
+        public TelaCaixa telaCaixa;
 
         public RepositorioRevista repositorioRevista;
+
+        public RepositorioCaixa repositorioCaixa;
+
+        public TelaRevista(RepositorioRevista repositorioRevista, RepositorioCaixa repositorioCaixa)
+        {
+            this.repositorioRevista = repositorioRevista;
+            this.repositorioCaixa = repositorioCaixa;
+        }
 
         public string ApresentarMenuRevista()
         {
@@ -41,13 +49,16 @@ namespace ClubeDaLeitura.ConsoleApp.ModuloRevista
             Console.Write("Digite o número da edição da revista: ");
             int numeroRevista = Convert.ToInt32(Console.ReadLine());
 
-            Console.Write("Informe o ano de publicação da revista");
+            Console.Write("Informe o ano de publicação da revista: ");
             int anoPublicacao = Convert.ToInt32(Console.ReadLine());
 
-            Console.Write("Informe a caixa que ela pertence");
-            string caixaPertencente = Console.ReadLine()!.Trim();
-
             VisualizarCaixas();
+
+            Console.Write("Informe o ID da caixa: ");
+            int idCaixa = Convert.ToInt32(Console.ReadLine());
+
+            Caixa caixaPertencente = repositorioCaixa.SelecionarCaixaPorId(idCaixa);
+
 
             Revista novaRevista = new Revista(tituloRevista, numeroRevista, anoPublicacao, caixaPertencente);
             novaRevista.IdRevista = GeradorIds.GerarIdRevista();
@@ -76,17 +87,20 @@ namespace ClubeDaLeitura.ConsoleApp.ModuloRevista
             Console.Write("Digite o número da edição da revista: ");
             int numeroRevista = Convert.ToInt32(Console.ReadLine());
 
-            Console.Write("Informe o ano de publicação da revista");
+            Console.Write("Informe o ano de publicação da revista: ");
             int anoPublicacao = Convert.ToInt32(Console.ReadLine());
 
-            Console.Write("Informe a caixa que ela pertence");
-            string caixaPertencente = Console.ReadLine()!.Trim();
+            VisualizarCaixas();
+
+            Console.Write("Informe o ID da caixa: ");
+            int idCaixa = Convert.ToInt32(Console.ReadLine());
+
+            Caixa caixaPertencente = repositorioCaixa.SelecionarCaixaPorId(idCaixa);
 
             Revista novaRevista = new Revista(tituloRevista, numeroRevista, anoPublicacao, caixaPertencente);
 
-            bool conseguiuEditar = repositorioRevista.EditarRevista(idSelecionado, novaRevista);              
+            bool conseguiuEditar = repositorioRevista.EditarRevista(idSelecionado, novaRevista);     
             
-
                 if (!conseguiuEditar)
                 {
                     Notificador.ExibirMensagem("Houve um erro durante a edição das informações...", ConsoleColor.Red);
@@ -129,17 +143,19 @@ namespace ClubeDaLeitura.ConsoleApp.ModuloRevista
                 Console.WriteLine();
             }
 
-            Console.WriteLine("{0, - 8} | {1, -15} | {2, -8} | {3, -8} | {4, -8}",
+           Console.WriteLine("{0, -8} | {1, -15} | {2, -8} | {3, -8} | {4, -8}",
                               "ID", "Título", "Número", "Ano Publicação", "Caixa");
+
+            Revista[] revistas = repositorioRevista.SelecionarRevista();
 
             for (int i = 0; i < revistas.Length; i++)
             {
-                Revista revistaSelecionada = revistas[i];
+                Revista r = revistas[i];
 
-                if (revistaSelecionada == null) continue;
+                if (r == null) continue;
 
-                Console.WriteLine("{0, - 8} | {1, -15} | {2, -8} | {3, -8} | {4, -8}",
-revistaSelecionada.IdRevista, revistaSelecionada.TituloRevista, revistaSelecionada.NumeroRevista, revistaSelecionada.AnoPublicacao, revistaSelecionada.CaixaPertencente);
+                Console.WriteLine("{0, -8} | {1, -15} | {2, -8} | {3, -8} | {4, -8}",
+                r.IdRevista, r.TituloRevista, r.NumeroRevista, r.AnoPublicacao, r.CaixaPertencente);
 
             }
 
@@ -147,7 +163,16 @@ revistaSelecionada.IdRevista, revistaSelecionada.TituloRevista, revistaSeleciona
 
         public void VisualizarCaixas()
         {
+            Caixa[] caixas = repositorioCaixa.SelecionarCaixa();
 
+            foreach (Caixa c in caixas)
+            {
+                if (c != null)
+                Console.WriteLine(c.IdCaixa + " - " + c.CorCaixa + " - " + c.EtiquetaCaixa);
+
+            }
+
+            Console.ReadLine();
         }
 
     }

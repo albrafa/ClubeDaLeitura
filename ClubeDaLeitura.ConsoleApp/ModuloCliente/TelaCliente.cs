@@ -7,12 +7,11 @@ namespace ClubeDaLeitura.ConsoleApp.ModuloCliente
     {
         public RepositorioCliente repositorioCliente;
 
-        public TelaCaixa telaCaixa;
-
-        public TelaCliente(TelaCaixa telaCaixa) // new, em outra tela, acaba chamando essa linha de código.
+        public TelaCliente(RepositorioCliente repositorioCliente) // new, em outra tela, acaba chamando essa linha de código (construtor)
         {
-            this.telaCaixa = telaCaixa;
+            this.repositorioCliente = repositorioCliente;
         }
+        
 
         public string ApresentarMenuCliente()
         {
@@ -124,7 +123,7 @@ namespace ClubeDaLeitura.ConsoleApp.ModuloCliente
             }
             Console.WriteLine();
 
-            Console.WriteLine("{0, - 8} | {1, -12} | {2, -12} | {3, -10}",
+            Console.WriteLine("{0, -8} | {1, -12} | {2, -12} | {3, -10}",
                                "ID", "Nome", "Responsável", "Contato");
 
             Cliente[] clientes = repositorioCliente.SelecionarClientes();
@@ -136,7 +135,7 @@ namespace ClubeDaLeitura.ConsoleApp.ModuloCliente
                 if (clienteSelecionado == null) continue;
 
 
-                Console.WriteLine("{0, - 8} | {1, -12} | {2, -12} | {3, -10}",
+                Console.WriteLine("{0, -8} | {1, -12} | {2, -12} | {3, -10}",
                 clienteSelecionado.Id, clienteSelecionado.NomeCliente, clienteSelecionado.NomeResponsavel, clienteSelecionado.Telefone);
             }
         }

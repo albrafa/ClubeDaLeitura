@@ -7,10 +7,11 @@ namespace ClubeDaLeitura.ConsoleApp.ModuloCaixa
     public class TelaCaixa
     {
         public RepositorioCaixa repositorioCaixa;
-        public TelaCaixa()
+        public TelaCaixa(RepositorioCaixa repositorioCaixa)
         {
             repositorioCaixa = new RepositorioCaixa();
         }
+
 
         public string ApresentarMenuCaixa()
         {
@@ -128,7 +129,7 @@ namespace ClubeDaLeitura.ConsoleApp.ModuloCaixa
                 Console.WriteLine();
             }
 
-            Console.WriteLine("{0, - 8} | {1, -15} | {2, -10} | {3, -10} | {4, -20}",
+            Console.WriteLine("{0, -8} | {1, -15} | {2, -10} | {3, -10} | {4, -20}",
                                  "ID Caixa", "Etiqueta", "Cor", "Status", "Revistas da Caixa");
 
             Caixa[] caixaCadastrda = repositorioCaixa.SelecionarCaixa();
@@ -139,7 +140,7 @@ namespace ClubeDaLeitura.ConsoleApp.ModuloCaixa
 
                 if (caixaSelecionada == null) continue;
 
-                Console.WriteLine("{0, - 8} | {1, -15} | {2, -10} | {3, -10} | {4, -20}",
+                Console.WriteLine("{0, -8} | {1, -15} | {2, -10} | {3, -10} | {4, -20}",
 caixaSelecionada.IdCaixa, caixaSelecionada.EtiquetaCaixa, caixaSelecionada.CorCaixa, caixaSelecionada.DiasEmprestimoCaixa, caixaSelecionada.ObterQuantidadeRevista());
 
             }

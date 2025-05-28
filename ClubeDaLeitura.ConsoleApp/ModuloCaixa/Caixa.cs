@@ -8,15 +8,17 @@ namespace ClubeDaLeitura.ConsoleApp.ModuloCaixa
         public string EtiquetaCaixa { get; set; }
         public string CorCaixa { get; set; }
         public int DiasEmprestimoCaixa { get; set; }
+        public string CaixaPertencente { get; set; }
 
         public Revista[] Revistas;
 
 
-        public Caixa(string etiquetaCaixa, string corCaixa, int diasEmprestimoCaixa)
+        public Caixa(string etiquetaCaixa, string corCaixa, int diasEmprestimoCaixa, string caixaPertencente)
         {
             EtiquetaCaixa = etiquetaCaixa;
             CorCaixa = corCaixa;
             DiasEmprestimoCaixa = diasEmprestimoCaixa;
+            CaixaPertencente = caixaPertencente;
 
             Revistas = new Revista[100];
         }

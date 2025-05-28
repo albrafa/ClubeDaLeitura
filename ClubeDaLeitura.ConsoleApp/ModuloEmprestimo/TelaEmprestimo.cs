@@ -11,6 +11,10 @@ namespace ClubeDaLeitura.ConsoleApp.ModuloEmprestimo
         public RepositorioCaixa repositorioCaixa;
         public RepositorioCliente repositorioCliente;
         public RepositorioRevista repositorioRevista;
+        public RepositorioCliente repCliente;
+
+        public TelaCliente telaCliente;
+        public TelaRevista telaRevista;
 
         public TelaEmprestimo(RepositorioEmprestimo repositorioEmprestimo, RepositorioCaixa repositorioCaixa, RepositorioCliente repositorioCliente, RepositorioRevista repositorioRevista)
         {
@@ -25,6 +29,13 @@ namespace ClubeDaLeitura.ConsoleApp.ModuloEmprestimo
             TelaCaixa = telaCaixa;
             TelaCliente = telaCliente;
             TelaRevista = telaRevista;
+        }
+
+        public TelaEmprestimo(RepositorioCaixa repositorioCaixa, RepositorioCliente repCliente, RepositorioRevista repositorioRevista)
+        {
+            this.repositorioCaixa = repositorioCaixa;
+            this.repCliente = repCliente;
+            this.repositorioRevista = repositorioRevista;
         }
 
         public TelaCaixa TelaCaixa { get; set; }
@@ -55,9 +66,13 @@ namespace ClubeDaLeitura.ConsoleApp.ModuloEmprestimo
             Console.WriteLine("-------------------------");
             Console.WriteLine();
 
+            TelaCliente.VisualizarCliente(false);
+
             Console.Write("Digite o ID do cliente: ");
             int idClienteSelecionado = Convert.ToInt32(Console.ReadLine());
             Console.WriteLine();
+
+            telaRevista.VisualizarRevista(false);
 
             Console.Write("Digite o ID da revista desejada: ");
             int idRevistaSelecionada = Convert.ToInt32(Console.ReadLine());
@@ -68,6 +83,8 @@ namespace ClubeDaLeitura.ConsoleApp.ModuloEmprestimo
             Revista revistaSelecionada = repositorioRevista.SelecionarRevistaPorId(idRevistaSelecionada);
 
             Emprestimo novoEmprestimo = new Emprestimo(clienteSelecionado, revistaSelecionada, DateTime.Now);
+
+            repositorioEmprestimo.RegistrarEmprestimo(novoEmprestimo);
 
             Notificador.ExibirMensagem("O registro foi concluído com sucesso!", ConsoleColor.Green);
 
@@ -80,37 +97,43 @@ namespace ClubeDaLeitura.ConsoleApp.ModuloEmprestimo
             Console.WriteLine("-------------------------");
             Console.WriteLine();
 
-            Console.Write("Digite o ID do cliente: ");
-            int idCliente = Convert.ToInt32(Console.ReadLine());
+            VisualizarEmprestimo(false);
 
-        }
-
-        public void VisualizarEmprestimo()
-        {
-            Console.WriteLine("---------------------------");
-            Console.WriteLine("Visualizando empréstimos...");
-            Console.WriteLine("---------------------------");
-            Console.WriteLine();
-
-            Console.WriteLine("{0, - 8} | {1, -12} | {2, -12} | {3, -10}",
-                              "ID", "Nome", "Responsável", "Contato");
 
             Console.WriteLine();
-            Console.Write("Digite o ID do cliente que deseja visualizar: ");
+            Console.Write("Digite o ID do empréstimo que deseja registrar devolução: ");
 
             int idSelecionado = Convert.ToInt32(Console.ReadLine());
 
-            Cliente[] clientesCadastrados = repositorioCliente.SelecionarClientes();
+            Emprestimo emprestimo = repositorioEmprestimo.SelecionarEmprestimoPorId(idSelecionado);
 
-            for (int i = 0; i < clientesCadastrados.Length; i++)
+        }
+
+        public void VisualizarEmprestimo(bool exibirTitulo)
+        {
+            if (exibirTitulo)
             {
-                Cliente clienteSelecionado = clientesCadastrados[i];
 
-                if (clienteSelecionado == null)
+                Console.WriteLine("---------------------------");
+                Console.WriteLine("Visualizando empréstimos...");
+                Console.WriteLine("---------------------------");
+                Console.WriteLine();
+            }
+
+            Console.WriteLine("{0, -8} | {1, -12} | {2, -12} | {3, -10}",
+                              "ID", "Nome", "Data de Empréstimo", "Revista");
+
+            Emprestimo[] emprestimos = repositorioEmprestimo.SelecionarEmprestimo();
+
+            for (int i = 0; i < emprestimos.Length; i++)
+            {
+                Emprestimo e = emprestimos[i];
+
+                if (e == null)
                     continue;
 
-                Console.WriteLine("{0, - 8} | {1, -12} | {2, -12} | {3, -10}",
-                clienteSelecionado.Id, clienteSelecionado.NomeCliente, clienteSelecionado.NomeResponsavel, clienteSelecionado.Telefone);
+                Console.WriteLine("{0, -8} | {1, -12} | {2, -12} | {3, -10}",
+                e.Id, e.Cliente.NomeCliente, e.DataEmprestimo, e.Revista.TituloRevista);
             }
 
         }
