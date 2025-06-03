@@ -2,15 +2,15 @@
 {
     public static class GeradorIds
     {
-        public static int IdCliente = 0;
+        public static int IdAmigo = 0;
         public static int IdCaixa = 0;
         public static int IdRevista = 0;
         public static int IdEmprestimo = 0;
 
-        public static int GerarIdCliente()
+        public static int GerarIdAmigo()
         {
-            IdCliente++;
-            return IdCliente;
+            IdAmigo++;
+            return IdAmigo;
 
         }
 

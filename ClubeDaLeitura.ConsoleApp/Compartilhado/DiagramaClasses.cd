@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ClubeDaLeitura.ConsoleApp.Compartilhado.EntidadeBase">
+    <Position X="0.75" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAEAAAAAAAAAAAAAQAAAAAAAAAAAAA=</HashCode>
+      <FileName>Compartilhado\EntidadeBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ClubeDaLeitura.ConsoleApp.ModuloCaixa.Caixa">
+    <Position X="4.25" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAQAAAEAACAgAEAAAAAAQAAAEAAAAAAAoA=</HashCode>
+      <FileName>ModuloCaixa\Caixa.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ClubeDaLeitura.ConsoleApp.ModuloRevista.Revista">
+    <Position X="8.25" Y="1" Width="2.5" />
+    <AssociationLine Name="CaixaPertencente" Type="ClubeDaLeitura.ConsoleApp.ModuloCaixa.Caixa" FixedFromPoint="true">
+      <Path>
+        <Point X="8.25" Y="2.239" />
+        <Point X="7.958" Y="2.239" Type="JumpStart" />
+        <Point X="7.792" Y="2.239" Type="JumpEnd" />
+        <Point X="5.75" Y="2.239" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAIQAAAAEAIAAAAAAAAAAAQAAQAAAAAABAFA=</HashCode>
+      <FileName>ModuloRevista\Revista.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="CaixaPertencente" />
+    </ShowAsAssociation>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

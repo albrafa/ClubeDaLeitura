@@ -1,19 +1,16 @@
-﻿using ClubeDaLeitura.ConsoleApp.ModuloCaixa;
+﻿using ClubeDaLeitura.ConsoleApp.Compartilhado;
+using ClubeDaLeitura.ConsoleApp.ModuloCaixa;
 
 namespace ClubeDaLeitura.ConsoleApp.ModuloRevista
 {
 
-    public class Revista
+    public class Revista : EntidadeBase
     {
-        public static int RevistaSelecionada = 0;
-
-        public int Id { get; set; }
+        public static int RevistaSelecionada = 0;        
         public string Titulo { get; set; }
         public int Numero { get; set; }
         public int AnoPublicacao { get; set; }
-        public Caixa CaixaPertencente { get; set; }
-
-        
+        public Caixa CaixaPertencente { get; set; }        
 
         public string NumeroSerie
         {
@@ -25,6 +22,7 @@ namespace ClubeDaLeitura.ConsoleApp.ModuloRevista
             }
         }
 
+        public int Id { get; internal set; }
 
         public Revista(string tituloRevista, int numeroRevista, int anoPublicacao, Caixa caixaPertencente)
         {
@@ -42,7 +40,7 @@ namespace ClubeDaLeitura.ConsoleApp.ModuloRevista
             return RevistaSelecionada;
         }
 
-        public string Validar()
+        public override string Validar()
         {
             string erros = null;
 
@@ -52,16 +50,26 @@ namespace ClubeDaLeitura.ConsoleApp.ModuloRevista
             if (Titulo.Length < 2)
                 erros += "Por favor, insira ao menos 2 caracteres.\n";
 
-            if (Numero == null)
+            if (Numero == 0)
                 erros += "O campo 'Número da Edição' é obrigatório.\n";
 
-            if (AnoPublicacao == null)
+            if (AnoPublicacao == 0)
                 erros += "O campo 'Ano de Punlicação' é obrigatório.\n";
 
             if (CaixaPertencente == null)
                 erros += "O campo 'Caixa Pertencente' é obrigatório.\n";           
 
             return erros;
+        }       
+
+        public override void AtualizarDados(EntidadeBase registroEditado)
+        {
+            Revista revistaEditada = (Revista)registroEditado;
+
+            Titulo = revistaEditada.Titulo;
+            Numero = revistaEditada.Numero;
+            AnoPublicacao = revistaEditada.AnoPublicacao;
+            CaixaPertencente = revistaEditada.CaixaPertencente;
         }
 
         //public void AdicionarCaixa(Caixa caixa)

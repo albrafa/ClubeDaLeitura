@@ -1,10 +1,10 @@
-﻿using ClubeDaLeitura.ConsoleApp.ModuloRevista;
+﻿using ClubeDaLeitura.ConsoleApp.Compartilhado;
+using ClubeDaLeitura.ConsoleApp.ModuloRevista;
 
 namespace ClubeDaLeitura.ConsoleApp.ModuloCaixa
 {
-  public  class Caixa
+    public class Caixa : EntidadeBase
     {
-        public int IdCaixa { get; set; }
         public string EtiquetaCaixa { get; set; }
         public string CorCaixa { get; set; }
         public int DiasEmprestimoCaixa { get; set; }
@@ -21,7 +21,7 @@ namespace ClubeDaLeitura.ConsoleApp.ModuloCaixa
             Revistas = new Revista[100];
         }
 
-        public string Validar()
+        public override string Validar()
         {
             string erros = null;
 
@@ -34,10 +34,19 @@ namespace ClubeDaLeitura.ConsoleApp.ModuloCaixa
             if (string.IsNullOrEmpty(CorCaixa))
                 erros += "O campo 'Cor da Caixa' é obrigatório.\n";
 
-            if (DiasEmprestimoCaixa == null)
+            if (DiasEmprestimoCaixa == 0)
                 erros += "O campo 'Tempo de empréstimo' é obrigatório.";
 
             return erros;
+        }
+
+        public override void AtualizarDados(EntidadeBase registroEditado)
+        {
+            Caixa caixaEditada = (Caixa)registroEditado;
+
+            EtiquetaCaixa = caixaEditada.EtiquetaCaixa;
+            CorCaixa = caixaEditada.CorCaixa;
+            DiasEmprestimoCaixa = caixaEditada.DiasEmprestimoCaixa;
         }
 
         public void AdicionarRevista(Revista revista)
@@ -54,7 +63,7 @@ namespace ClubeDaLeitura.ConsoleApp.ModuloCaixa
 
         public void RemoverRevista(Revista revista)
         {
-            for(int i = 0; i <Revistas.Length; i++)
+            for (int i = 0; i < Revistas.Length; i++)
             {
                 if (Revistas[i] == null)
                     continue;
@@ -82,6 +91,7 @@ namespace ClubeDaLeitura.ConsoleApp.ModuloCaixa
             return contador;
         }
 
+       
     }
 
 

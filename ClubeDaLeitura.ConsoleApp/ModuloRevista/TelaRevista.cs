@@ -1,10 +1,11 @@
-﻿using ClubeDaLeitura.ConsoleApp.ModuloCaixa;
+﻿using ClubeDaLeitura.ConsoleApp.Compartilhado;
+using ClubeDaLeitura.ConsoleApp.ModuloCaixa;
 using ClubeDaLeitura.ConsoleApp.ModuloCompartilhado;
 using System;
 
 namespace ClubeDaLeitura.ConsoleApp.ModuloRevista
 {
-    public class TelaRevista
+    public class TelaRevista : TelaBase
     {
         public TelaCaixa TelaCaixa;
 
@@ -15,25 +16,9 @@ namespace ClubeDaLeitura.ConsoleApp.ModuloRevista
         {
             repositorioRevista = repRevista;
             repositorioCaixa = repCaixa;
+            Modulo = "Revista";
         }
-
-        public string ApresentarMenuRevista()
-        {
-            Console.WriteLine("------------------");
-            Console.WriteLine("Gestão de revistas");
-            Console.WriteLine("------------------");
-            Console.WriteLine();
-            Console.WriteLine("Escolha a operação desejada: ");
-            Console.WriteLine("1 - Cadastrar nova revista: ");
-            Console.WriteLine("2 - Editar uma revista já cadastrada: ");
-            Console.WriteLine("3 - Excluir revista: ");
-            Console.WriteLine("4 - Visualizar revistas: ");
-
-            string menuRevista = Console.ReadLine();
-
-            return menuRevista;
-        }
-
+       
         public void CadastrarRevista()
         {
             Console.Clear();
@@ -56,12 +41,12 @@ namespace ClubeDaLeitura.ConsoleApp.ModuloRevista
             Console.Write("Informe o id da caixa");
             int idCaixa = Convert.ToInt32(Console.ReadLine());
 
-            Caixa caixaPertencente = repositorioCaixa.SelecionarCaixaPorId(idCaixa);
+            Caixa caixaPertencente = (Caixa)repositorioCaixa.SelecionarPorId(idCaixa);
 
             Revista novaRevista = new Revista(tituloRevista, numeroRevista, anoPublicacao, caixaPertencente);
             novaRevista.Id = GeradorIds.GerarIdRevista();
 
-            repositorioRevista.CadastrarRevista(novaRevista);
+            repositorioRevista.CadastrarRegistro(novaRevista);
 
             Notificador.ExibirMensagem("A revista foi cadastrada com sucesso!", ConsoleColor.Green);
         }
@@ -74,7 +59,7 @@ namespace ClubeDaLeitura.ConsoleApp.ModuloRevista
             Console.WriteLine("----------------------");
             Console.WriteLine();
 
-            VisualizarRevistas(false);
+            VisualizarRegistros(false);
 
             Console.Write("Digite o ID da revista que deseja editar: ");
             int idSelecionado = Convert.ToInt32(Console.ReadLine());
@@ -93,11 +78,11 @@ namespace ClubeDaLeitura.ConsoleApp.ModuloRevista
             Console.Write("Informe o id da caixa");
             int idCaixa = Convert.ToInt32(Console.ReadLine());
 
-            Caixa caixaPertencente = repositorioCaixa.SelecionarCaixaPorId(idCaixa);
+            Caixa caixaPertencente = (Caixa)repositorioCaixa.SelecionarPorId(idCaixa);
 
             Revista novaRevista = new Revista(tituloRevista, numeroRevista, anoPublicacao, caixaPertencente);
 
-            bool conseguiuEditar = repositorioRevista.EditarRevista(idSelecionado, novaRevista);
+            bool conseguiuEditar = repositorioRevista.EditarRegistro(idSelecionado, novaRevista);
 
             if (!conseguiuEditar)
             {
@@ -116,12 +101,12 @@ namespace ClubeDaLeitura.ConsoleApp.ModuloRevista
             Console.WriteLine("----------------------");
             Console.WriteLine();
 
-            VisualizarRevistas(false);
+            VisualizarRegistros(false);
 
             Console.Write("Digite o ID da revista que deseja excluir: ");
             int idSelecionado = Convert.ToInt32(Console.ReadLine());
 
-            bool conseguiuExcluir = repositorioRevista.ExcluirRevista(idSelecionado);
+            bool conseguiuExcluir = repositorioRevista.ExcluirRegistro(idSelecionado);
 
             if (!conseguiuExcluir)
             {
@@ -130,47 +115,33 @@ namespace ClubeDaLeitura.ConsoleApp.ModuloRevista
 
             Notificador.ExibirMensagem("A revista foi devidamente excluída do sistema.", ConsoleColor.Green);
         }
-
-        public void VisualizarRevistas(bool exibirTitulo)
-        {
-            if (exibirTitulo)
-            {
-                Console.WriteLine("----------------------");
-                Console.WriteLine("Visualizando Revistas...");
-                Console.WriteLine("----------------------");
-                Console.WriteLine();
-            }
-
-            Console.WriteLine("{0, -8} | {1, -15} | {2, -8} | {3, -8} | {4, -8}",
-                              "ID", "Título", "Número", "Ano Publicação", "Caixa");
-
-            Revista[] revistas = repositorioRevista.SelecionarRevista();
-
-            for (int i = 0; i < revistas.Length; i++)
-            {
-                Revista r = revistas[i];
-
-                if (r == null) continue;
-
-                Console.WriteLine("{0, -8} | {1, -15} | {2, -8} | {3, -8} | {4, -8}",
-                    r.Id, r.Titulo, r.Numero, r.AnoPublicacao, r.CaixaPertencente.EtiquetaCaixa);
-
-            }
-        }
-
+       
         public void VisualizarCaixas()
         {
-            Caixa[] caixas = repositorioCaixa.SelecionarTodasCaixas();
+            Caixa[] caixas = (Caixa[])repositorioCaixa.SelecionarRegistros();
 
             foreach (Caixa c in caixas)
             {
                 if (c != null)
-                    Console.WriteLine(c.IdCaixa + " - " + c.CorCaixa + " - " + c.EtiquetaCaixa);
+                    Console.WriteLine(c.Id + " - " + c.CorCaixa + " - " + c.EtiquetaCaixa);
             }
 
             Console.ReadLine();
         }
 
+        protected override void ApresentarLinhaTabela(EntidadeBase registro)
+        {
+            Revista r = (Revista)registro;            
+
+            Console.WriteLine("{0, -8} | {1, -15} | {2, -8} | {3, -8} | {4, -8}",
+                r.Id, r.Titulo, r.Numero, r.AnoPublicacao, r.CaixaPertencente.EtiquetaCaixa);
+        }
+
+        protected override void ApresentarCabecalhoTabela()
+        {
+            Console.WriteLine("{0, -8} | {1, -15} | {2, -8} | {3, -8} | {4, -8}",
+                           "ID", "Título", "Número", "Ano Publicação", "Caixa");
+        }
     }
 }
 

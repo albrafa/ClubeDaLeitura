@@ -1,20 +1,20 @@
-﻿using ClubeDaLeitura.ConsoleApp.ModuloCliente;
+﻿using ClubeDaLeitura.ConsoleApp.Compartilhado;
+using ClubeDaLeitura.ConsoleApp.ModuloAmigo;
 using ClubeDaLeitura.ConsoleApp.ModuloRevista;
 
 namespace ClubeDaLeitura.ConsoleApp.ModuloEmprestimo;
 
-public class Emprestimo
-{
-    public int Id;
-    public Cliente Cliente { get; set; }
+public class Emprestimo : EntidadeBase
+{    
+    public Amigo Amigo { get; set; }
     public Revista Revista { get; set; }
     public DateTime DataEmprestimo { get; private set; }
     public DateTime DataDevolucao { get; private set; }
 
 
-    public Emprestimo(Cliente cliente, Revista revista, DateTime dataEmprestimo)
+    public Emprestimo(Amigo amigo, Revista revista, DateTime dataEmprestimo)
     {
-        Cliente = cliente;
+        Amigo = amigo;
         Revista = revista;
         DataEmprestimo = DateTime.Today;
     }
@@ -35,5 +35,25 @@ public class Emprestimo
         }
 
         return false;
+    }
+
+    public override string Validar()
+    {
+        string erros = null;
+
+        if (Amigo == null)
+            erros += "O campo 'Amigo' é obrigatório.\n";
+
+        if (Revista == null)
+            erros += "O campo 'Revista' é obrigatório.\n";
+
+        if (DataEmprestimo == DateTime.MinValue)
+            erros += "O campo 'Data de Emprestimo' é obrigatório.\n";
+
+        return erros;
+    }
+
+    public override void AtualizarDados(EntidadeBase registroEditado)
+    {        
     }
 }

@@ -1,22 +1,22 @@
-﻿using System.Linq.Expressions;
+﻿using ClubeDaLeitura.ConsoleApp.Compartilhado;
+using System.Linq.Expressions;
 
-namespace ClubeDaLeitura.ConsoleApp.ModuloCliente
+namespace ClubeDaLeitura.ConsoleApp.ModuloAmigo
 {
-    public class Cliente
+    public class Amigo : EntidadeBase
     {
-        public int Id { get; set; }
+        
         public string Nome { get; set; }
         public string NomeResponsavel { get; set; }
         public int Telefone { get; set; }
 
 
-        public Cliente(string nomeCliente, string nomeResponsavel, int telefone)
+        public Amigo(string nomeAmigo, string nomeResponsavel, int telefone)
         {
-            Nome = nomeCliente;
+            Nome = nomeAmigo;
             NomeResponsavel = nomeResponsavel;
             Telefone = telefone;
         }
-
 
         public string HistoricoEmprestimos()    //utilizar a revista que o usuário pegou emprestada e usar a aula Regras de Negócio 03
         {
@@ -24,7 +24,7 @@ namespace ClubeDaLeitura.ConsoleApp.ModuloCliente
             return "";
         }
 
-        public string Validar ()
+        public override string Validar ()
         {
            string erros = null;
 
@@ -44,6 +44,15 @@ namespace ClubeDaLeitura.ConsoleApp.ModuloCliente
                 erros += "O campo 'Contato' é obrigatório";
 
             return erros;
+        }
+
+        public override void AtualizarDados(EntidadeBase registroEditado)
+        {
+            Amigo amigoAtualizado = (Amigo)registroEditado;            
+
+            Nome = amigoAtualizado.Nome;
+            NomeResponsavel = amigoAtualizado.NomeResponsavel;
+            Telefone = amigoAtualizado.Telefone;
         }
     }
 }
