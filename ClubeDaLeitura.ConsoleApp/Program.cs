@@ -103,7 +103,7 @@ namespace ClubeDaLeitura.ConsoleApp
         #endregion
 
         static void Main(string[] args)
-        {                                        
+        {            
             Amigo amigo = new Amigo("Leonardo", "Leonardo Pai", 987);
             RepositorioAmigo repositorioAmigo = new RepositorioAmigo();
             repositorioAmigo.CadastrarRegistro(amigo);
@@ -142,11 +142,11 @@ namespace ClubeDaLeitura.ConsoleApp
                         switch (menuAmigo)
                         {
                             case "1":
-                                telaAmigo.CadastrarAmigo(); break;
+                                telaAmigo.CadastrarRegistro(); break;
                             case "2":
-                                telaAmigo.EditarAmigo(); break;
+                                telaAmigo.EditarRegistro(); break;
                             case "3":
-                                telaAmigo.ExcluirAmigo(); break;
+                                telaAmigo.ExcluirRegistro(); break;
                             case "4":
                                 telaAmigo.VisualizarRegistros(true); break;
                         }
@@ -159,11 +159,11 @@ namespace ClubeDaLeitura.ConsoleApp
                             switch (menuCaixa)
                             {
                                 case "1":
-                                    telaCaixa.CadastrarCaixa(); break;
+                                    telaCaixa.CadastrarRegistro(); break;
                                 case "2":
-                                    telaCaixa.EditarCaixa(); break;
+                                    telaCaixa.EditarRegistro(); break;
                                 case "3":
-                                    telaCaixa.ExcluirCaixa(); break;
+                                    telaCaixa.ExcluirRegistro(); break;
                                 case "4":
                                     telaCaixa.VisualizarRegistros(true); break;
                             }
@@ -177,11 +177,11 @@ namespace ClubeDaLeitura.ConsoleApp
                             switch (menuRevista)
                             {
                                 case "1":
-                                    telaRevista.CadastrarRevista(); break;
+                                    telaRevista.CadastrarRegistro(); break;
                                 case "2":
-                                    telaRevista.EditarRevista(); break;
+                                    telaRevista.EditarRegistro(); break;
                                 case "3":
-                                    telaRevista.ExcluirRevista(); break;
+                                    telaRevista.ExcluirRegistro(); break;
                                 case "4":
                                     telaRevista.VisualizarRegistros(true); break;
                             }

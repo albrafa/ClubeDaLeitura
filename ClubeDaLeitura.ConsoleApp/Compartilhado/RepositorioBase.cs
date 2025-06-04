@@ -1,83 +1,79 @@
 ﻿using ClubeDaLeitura.ConsoleApp.ModuloCompartilhado;
 
-namespace ClubeDaLeitura.ConsoleApp.Compartilhado
+namespace ClubeDaLeitura.ConsoleApp.Compartilhado;
+
+public class RepositorioBase<T> where T : EntidadeBase<T>
 {
-    public class RepositorioBase
+    public int contadorRegistros = 0;
+    
+    public T[] registros = new T[100];
+
+    public void CadastrarRegistro(T novoRegistro)
+    {                        
+        registros[contadorRegistros] = novoRegistro; 
+
+        contadorRegistros++;
+        novoRegistro.Id = contadorRegistros;
+    }
+
+    public bool EditarRegistro(int idSelecionado, T registroEditado)
     {
-        public int contadorRegistros = 0;
+        bool conseguiuEditar = false;
 
-        //public List<EntidadeBase> registros = new List<EntidadeBase>();
-        public EntidadeBase[] registros = new EntidadeBase[100];
-
-        public void CadastrarRegistro(EntidadeBase novoRegistro)
+        for (int i = 0; i < registros.Length; i++)
         {
-            
-            contadorRegistros++;
+            T registro = registros[i];
 
-            novoRegistro.Id = contadorRegistros; 
+            if (registro == null) continue;
 
-            registros[contadorRegistros] = novoRegistro;
-        }
-
-        public bool EditarRegistro(int idSelecionado, EntidadeBase registroEditado)
-        {
-            bool conseguiuEditar = false;
-
-            for (int i = 0; i < registros.Length; i++)
+            else if (registro.Id == idSelecionado)
             {
-                EntidadeBase registro = registros[i];
+                registro.AtualizarDados(registroEditado);//
 
-                if (registro == null) continue;
-
-                else if (registro.Id == idSelecionado)
-                {
-                    registro.AtualizarDados(registroEditado);//
-
-                    conseguiuEditar = true;
-                }
+                conseguiuEditar = true;
             }
-
-            return conseguiuEditar;
         }
 
-        public bool ExcluirRegistro(int idSelecionado)
-        {
-            bool conseguiuExcluir = false;
+        return conseguiuEditar;
+    }
 
-            for (int i = 0; i < registros.Length; i++)
+    public bool ExcluirRegistro(int idSelecionado)
+    {
+        bool conseguiuExcluir = false;
+
+        for (int i = 0; i < registros.Length; i++)
+        {
+            if (registros[i] == null) continue;
+
+            else if (registros[i].Id == idSelecionado)
             {
-                if (registros[i] == null) continue;
+                registros[i] = null;
 
-                else if (registros[i].Id == idSelecionado)
-                {
-                    registros[i] = null;
-
-                    conseguiuExcluir = true;
-                }
+                conseguiuExcluir = true;
             }
-
-            return conseguiuExcluir;
         }
 
-        public EntidadeBase SelecionarPorId(int idSelecionado)
+        return conseguiuExcluir;
+    }
+
+    public T SelecionarPorId(int idSelecionado)
+    {
+        for (int i = 0; i < registros.Length; i++)
         {
-            for (int i = 0; i < registros.Length; i++)
-            {
-                EntidadeBase registro = registros[i];
+            T registro = registros[i];
 
-                if (registro == null)
-                    continue;
+            if (registro == null)
+                continue;
 
-                else if (registro.Id == idSelecionado)
-                    return registro;
-            }
-
-            return null;
+            else if (registro.Id == idSelecionado)
+                return registro;
         }
 
-        public EntidadeBase[] SelecionarRegistros()
-        {
-            return registros;
-        }
+        return null;
+    }
+
+    public T[] SelecionarRegistros()
+    {
+        return registros;
     }
 }

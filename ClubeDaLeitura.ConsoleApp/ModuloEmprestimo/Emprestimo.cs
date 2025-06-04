@@ -4,7 +4,7 @@ using ClubeDaLeitura.ConsoleApp.ModuloRevista;
 
 namespace ClubeDaLeitura.ConsoleApp.ModuloEmprestimo;
 
-public class Emprestimo : EntidadeBase
+public class Emprestimo : EntidadeBase<Emprestimo>
 {    
     public Amigo Amigo { get; set; }
     public Revista Revista { get; set; }
@@ -53,7 +53,7 @@ public class Emprestimo : EntidadeBase
         return erros;
     }
 
-    public override void AtualizarDados(EntidadeBase registroEditado)
+    public override void AtualizarDados(Emprestimo registroEditado)
     {        
     }
 }

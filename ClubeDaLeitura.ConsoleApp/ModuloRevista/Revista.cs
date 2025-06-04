@@ -4,7 +4,7 @@ using ClubeDaLeitura.ConsoleApp.ModuloCaixa;
 namespace ClubeDaLeitura.ConsoleApp.ModuloRevista
 {
 
-    public class Revista : EntidadeBase
+    public class Revista : EntidadeBase<Revista>
     {
         public static int RevistaSelecionada = 0;        
         public string Titulo { get; set; }
@@ -22,8 +22,6 @@ namespace ClubeDaLeitura.ConsoleApp.ModuloRevista
             }
         }
 
-        public int Id { get; internal set; }
-
         public Revista(string tituloRevista, int numeroRevista, int anoPublicacao, Caixa caixaPertencente)
         {
             Titulo = tituloRevista;
@@ -31,7 +29,6 @@ namespace ClubeDaLeitura.ConsoleApp.ModuloRevista
             AnoPublicacao = anoPublicacao;
             CaixaPertencente = caixaPertencente;
         }
-
 
         public int HistoricoEmprestimosRevista()
         {
@@ -62,10 +59,8 @@ namespace ClubeDaLeitura.ConsoleApp.ModuloRevista
             return erros;
         }       
 
-        public override void AtualizarDados(EntidadeBase registroEditado)
-        {
-            Revista revistaEditada = (Revista)registroEditado;
-
+        public override void AtualizarDados(Revista revistaEditada)
+        {            
             Titulo = revistaEditada.Titulo;
             Numero = revistaEditada.Numero;
             AnoPublicacao = revistaEditada.AnoPublicacao;

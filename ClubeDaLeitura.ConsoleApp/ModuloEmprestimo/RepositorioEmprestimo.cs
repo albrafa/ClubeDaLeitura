@@ -2,7 +2,7 @@
 
 namespace ClubeDaLeitura.ConsoleApp.ModuloEmprestimo;
 
-public class RepositorioEmprestimo : RepositorioBase
+public class RepositorioEmprestimo : RepositorioBase<Emprestimo>
 {
     public void RegistrarEmprestimo(Emprestimo novoEmprestimo)
     {

@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 
 namespace ClubeDaLeitura.ConsoleApp.ModuloAmigo
 {
-    public class Amigo : EntidadeBase
+    public class Amigo : EntidadeBase<Amigo>
     {
         
         public string Nome { get; set; }
@@ -46,10 +46,8 @@ namespace ClubeDaLeitura.ConsoleApp.ModuloAmigo
             return erros;
         }
 
-        public override void AtualizarDados(EntidadeBase registroEditado)
-        {
-            Amigo amigoAtualizado = (Amigo)registroEditado;            
-
+        public override void AtualizarDados(Amigo amigoAtualizado)
+        {                      
             Nome = amigoAtualizado.Nome;
             NomeResponsavel = amigoAtualizado.NomeResponsavel;
             Telefone = amigoAtualizado.Telefone;

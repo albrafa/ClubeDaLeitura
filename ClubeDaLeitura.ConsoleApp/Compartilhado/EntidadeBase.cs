@@ -1,13 +1,10 @@
-﻿using ClubeDaLeitura.ConsoleApp.ModuloRevista;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+﻿namespace ClubeDaLeitura.ConsoleApp.Compartilhado;
 
-namespace ClubeDaLeitura.ConsoleApp.Compartilhado;
-
-public abstract class EntidadeBase
+public abstract class EntidadeBase<T>
 {
     public int Id { get; set; }
 
     public abstract string Validar();
 
-    public abstract void AtualizarDados(EntidadeBase registroEditado);
+    public abstract void AtualizarDados(T registroEditado);
 }

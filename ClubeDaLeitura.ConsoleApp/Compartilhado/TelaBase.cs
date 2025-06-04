@@ -1,10 +1,12 @@
 ﻿using ClubeDaLeitura.ConsoleApp.ModuloAmigo;
+using ClubeDaLeitura.ConsoleApp.ModuloCompartilhado;
 
 namespace ClubeDaLeitura.ConsoleApp.Compartilhado;
 
-public abstract class TelaBase
+public abstract class TelaBase<T> where T : EntidadeBase<T>
 {
     public string Modulo;
+    public RepositorioBase<T> repositorioBase;
 
     public string ApresentarMenu()
     {
@@ -25,6 +27,74 @@ public abstract class TelaBase
         return menuAmigo;
     }
 
+    public void CadastrarRegistro()
+    {
+        Console.WriteLine("----------------------");
+        Console.WriteLine($"Cadastrando {Modulo}...");
+        Console.WriteLine("----------------------");
+        Console.WriteLine();        
+
+        T novoRegistro = this.ObterDados();
+
+        repositorioBase.CadastrarRegistro(novoRegistro);
+
+        Notificador.ExibirMensagem("O cadastrado foi realizado com sucesso!", ConsoleColor.Green);
+    }
+
+    public void EditarRegistro()
+    {
+        Console.WriteLine("----------------------");
+        Console.WriteLine($"Editando {Modulo}...");
+        Console.WriteLine("----------------------");
+        Console.WriteLine();
+
+        VisualizarRegistros(false);
+
+        Console.Write("Digite o ID de registro que deseja editar: ");
+        int idSelecionado = Convert.ToInt32(Console.ReadLine());
+
+        Console.WriteLine();
+
+        T novoRegistro = this.ObterDados();
+
+        bool conseguiuEditar = repositorioBase.EditarRegistro(idSelecionado, novoRegistro);
+
+        if (!conseguiuEditar)
+        {
+            Notificador.ExibirMensagem("Houve um erro durante a edição das informações...", ConsoleColor.Red);
+            return;
+        }
+
+        Notificador.ExibirMensagem("As informações foram editadas com sucesso!", ConsoleColor.Green);
+    }
+
+    public void ExcluirRegistro()
+    {
+        Console.Clear();
+        Console.WriteLine("----------------------");
+        Console.WriteLine($"Excluindo {Modulo}...");
+        Console.WriteLine("----------------------");
+        Console.WriteLine();
+
+        VisualizarRegistros(false);
+
+        Console.Write("Digite o ID do registro que deseja excluir: ");
+        int idSelecionado = Convert.ToInt32(Console.ReadLine());
+
+        bool conseguiuExcluir = repositorioBase.ExcluirRegistro(idSelecionado);
+
+        if (!conseguiuExcluir)
+        {
+            Notificador.ExibirMensagem("Houve um erro durante a exclusão...", ConsoleColor.Red);
+        }
+
+        Console.WriteLine();
+
+        Notificador.ExibirMensagem("O registro foi devidamente excluído do sistema.", ConsoleColor.Green);
+    }
+
+    protected abstract T ObterDados();   
+
     public void VisualizarRegistros(bool exibirTitulo)
     {
         if (exibirTitulo)
@@ -38,13 +108,11 @@ public abstract class TelaBase
 
         Console.WriteLine();
 
-        ApresentarCabecalhoTabela();
+        ApresentarCabecalhoTabela();            
 
-        RepositorioBase repositorioBase = new RepositorioBase();    
+        T[] registros = repositorioBase.SelecionarRegistros();
 
-        EntidadeBase[] registros = repositorioBase.SelecionarRegistros();
-
-        foreach (EntidadeBase registro in registros)
+        foreach (T registro in registros)
         {
             if (registro == null)
                 continue;
@@ -53,7 +121,7 @@ public abstract class TelaBase
         }
     }
 
-    protected abstract void ApresentarLinhaTabela(EntidadeBase registro);
+    protected abstract void ApresentarLinhaTabela(T registro);
 
     protected abstract void ApresentarCabecalhoTabela();
     

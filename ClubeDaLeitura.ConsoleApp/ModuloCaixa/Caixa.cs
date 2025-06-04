@@ -3,7 +3,7 @@ using ClubeDaLeitura.ConsoleApp.ModuloRevista;
 
 namespace ClubeDaLeitura.ConsoleApp.ModuloCaixa
 {
-    public class Caixa : EntidadeBase
+    public class Caixa : EntidadeBase<Caixa>
     {
         public string EtiquetaCaixa { get; set; }
         public string CorCaixa { get; set; }
@@ -40,10 +40,8 @@ namespace ClubeDaLeitura.ConsoleApp.ModuloCaixa
             return erros;
         }
 
-        public override void AtualizarDados(EntidadeBase registroEditado)
-        {
-            Caixa caixaEditada = (Caixa)registroEditado;
-
+        public override void AtualizarDados(Caixa caixaEditada)
+        {            
             EtiquetaCaixa = caixaEditada.EtiquetaCaixa;
             CorCaixa = caixaEditada.CorCaixa;
             DiasEmprestimoCaixa = caixaEditada.DiasEmprestimoCaixa;

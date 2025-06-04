@@ -2,8 +2,6 @@
 using ClubeDaLeitura.ConsoleApp.ModuloAmigo;
 using ClubeDaLeitura.ConsoleApp.ModuloCompartilhado;
 using ClubeDaLeitura.ConsoleApp.ModuloRevista;
-using System.Numerics;
-using ClubeDaLeitura.ConsoleApp.Compartilhado;
 
 namespace ClubeDaLeitura.ConsoleApp.ModuloEmprestimo
 {
@@ -66,7 +64,7 @@ namespace ClubeDaLeitura.ConsoleApp.ModuloEmprestimo
             int idRevistaSelecionada = Convert.ToInt32(Console.ReadLine());
             Console.WriteLine();
             
-            Revista revistaSelecionada = (Revista)repositorioRevista.SelecionarPorId(idRevistaSelecionada);
+            Revista revistaSelecionada = repositorioRevista.SelecionarPorId(idRevistaSelecionada);
 
             Emprestimo novoEmprestimo = new Emprestimo(amigoSelecionado, revistaSelecionada, DateTime.Now);
 
@@ -89,7 +87,7 @@ namespace ClubeDaLeitura.ConsoleApp.ModuloEmprestimo
 
             int id = Convert.ToInt32(Console.ReadLine());
 
-            Emprestimo emprestimo = (Emprestimo)repositorioEmprestimo.SelecionarPorId(id);
+            Emprestimo emprestimo = repositorioEmprestimo.SelecionarPorId(id);
 
             bool devolucaoRegistrada = emprestimo.RegistrarDevolucao(DateTime.Now);
 
@@ -112,11 +110,11 @@ namespace ClubeDaLeitura.ConsoleApp.ModuloEmprestimo
             Console.WriteLine("{0, -8} | {1, -12} | {2, -12} | {3, -10}",
                               "ID", "Amigo", "Data", "Revista");           
 
-            EntidadeBase[] emprestimos = repositorioEmprestimo.SelecionarRegistros();
+            Emprestimo[] emprestimos = repositorioEmprestimo.SelecionarRegistros();
 
             for (int i = 0; i < emprestimos.Length; i++)
             {
-                Emprestimo e = (Emprestimo)emprestimos[i];
+                Emprestimo e = emprestimos[i];
 
                 if (e == null)
                     continue;
